@@ -20,6 +20,7 @@ const Webcam: React.FC = () => {
     return () => {
       if (!ref.current?.video?.srcObject) return;
       ref.current.video.srcObject = null;
+      ref.current.video.load();
     };
   }, []);
 
