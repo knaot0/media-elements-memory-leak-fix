@@ -7,7 +7,9 @@ const App = () => {
 
   return (
     <div>
-      <button onClick={toggle}>{open ? "Delete" : "Create"}</button>
+      <button id={open ? "delete-button" : "create-button"} onClick={toggle}>
+        {open ? "Delete" : "Create"}
+      </button>
       {open && <Webcam />}
     </div>
   );
