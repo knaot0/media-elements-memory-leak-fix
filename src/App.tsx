@@ -1,25 +1,29 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import Webcam from 'react-webcam';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import WebcamBase from "react-webcam";
 
 const App = () => {
-  const ref = useRef<Webcam>(null);
   const [open, setOpen] = useState(false);
   const toggle = useCallback(() => setOpen((prev) => !prev), []);
 
-  useEffect(() => {
-    return () => {
-      if (ref.current?.video?.srcObject) {
-        ref.current.video.srcObject = null;
-      }
-    };
-  }, []);
-
   return (
     <div>
-      <button onClick={toggle}>{open ? 'Delete' : 'Create'}</button>
+      <button onClick={toggle}>{open ? "Delete" : "Create"}</button>
       {open && <Webcam />}
     </div>
   );
+};
+
+const Webcam: React.FC = () => {
+  const ref = useRef<WebcamBase>(null);
+
+  useEffect(() => {
+    return () => {
+      if (!ref.current?.video?.srcObject) return;
+      ref.current.video.srcObject = null;
+    };
+  }, []);
+
+  return <WebcamBase ref={ref} />;
 };
 
 export default App;
